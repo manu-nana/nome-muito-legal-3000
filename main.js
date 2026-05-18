@@ -1,11 +1,18 @@
-const botoes = document.querySelectorAll(".botao");
+document.addEventListener("DOMContentLoaded", () => {
+  const botoes = document.querySelectorAll(".botao");
+  const abas = document.querySelectorAll(".aba-conteudo");
 
-for (let i = 0; i < botoes.length; i++) {
-  botoes[i].onclick = function () {
-    for (let j = 0; j < botoes.length; j++) {
-      botoes[j].classList.remove("ativo");
-    }
+  function activate(index) {
+    botoes.forEach((b) => b.classList.remove("ativo"));
+    abas.forEach((a) => (a.style.display = "none"));
+    if (botoes[index]) botoes[index].classList.add("ativo");
+    if (abas[index]) abas[index].style.display = "block";
+  }
 
-    botoes[i].classList.add("ativo");
-  };
-}
+  botoes.forEach((botao, i) => {
+    botao.addEventListener("click", () => activate(i));
+  });
+
+  const initialIndex = Array.from(botoes).findIndex((b) => b.classList.contains("ativo"));
+  activate(initialIndex === -1 ? 0 : initialIndex);
+});
